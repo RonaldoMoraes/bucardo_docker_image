@@ -1,10 +1,16 @@
 FROM ubuntu:xenial
 
-LABEL maintainer="lucas@vieira.io"
+LABEL maintainer="ronaldo.moraes1990@gmail.com"
 LABEL version="1.0"
 
 RUN apt-get -y update \
     && apt-get -y upgrade
+
+# Setting timzeone on env
+ENV TZ=America/Sao_Paulo
+
+# Creating timezone based on env
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get -y install postgresql-9.5 bucardo jq
 
@@ -22,6 +28,9 @@ RUN service postgresql start \
 
 COPY lib/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# Expose postgres
+# EXPOSE 5432
 
 VOLUME "/media/bucardo"
 CMD ["/bin/bash","-c","/entrypoint.sh"]
