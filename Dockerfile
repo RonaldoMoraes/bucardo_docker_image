@@ -30,7 +30,7 @@ COPY lib/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Expose postgres
-# EXPOSE 5432
+EXPOSE 5432
 
 VOLUME "/media/bucardo"
 CMD ["/bin/bash","-c","/entrypoint.sh"]
